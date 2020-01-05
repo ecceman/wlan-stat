@@ -1,5 +1,9 @@
 # wlan-stat
-Polybar WLAN status module that shows more details. Useful for WLAN troubleshooting, probably most interesting for network technicians. Shows
+Polybar WLAN status module that shows more details. 
+
+![alt text](https://github.com/ecceman/wlan-stat/blob/master/wlan-stat-screenshot.png)
+
+Useful for WLAN troubleshooting, probably most interesting for network technicians. Shows
 - SSID name
 - Signal strength in dBm
 - Channel
@@ -27,3 +31,4 @@ format-underline = #9f78e1
 format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
 ```
+
