@@ -19,6 +19,15 @@ cmd_ch = subprocess.Popen(['sudo iwlist ' + wnic + ' frequency |  grep Current |
 ch = cmd_ch.stdout.read().decode('utf-8')
 ch = ch.strip('\n')
 
+cmd_mcs = subprocess.Popen(['sudo iw ' + wnic + ' station dump | grep "tx bitrate" | awk \'{print $6}\''], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
+mcs_tx = cmd_mcs.stdout.read().decode('utf-8')
+mcs_tx = mcs_tx.strip('\n')
+
+qam = {0: 'BPSK', 1: 'QPSK', 2: 'QPSK', 3: '16-QAM', 4: '16-QAM', 5: '64-QAM', 6: '64-QAM', 7: '64-QAM', 8: '256-QAM', 9: '256-QAM'}
+mcs_tx = qam[int(mcs_tx)]
+
+
+
 cmd_ht = subprocess.Popen(['sudo iw dev | grep -i ' + wnic + ' -A 10 | grep -w "width: [0-9]*" | awk \'{print $6}\''], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
 ht = cmd_ht.stdout.read().decode('utf-8')
 ht = ht.strip('\n')
@@ -38,5 +47,5 @@ try:
 except IOError:
     pass
 
-print(ssid + ", " + rssi + " dBm, Ch " + ch + ", HT" + ht + " @ " + ap)
+print(ssid + ", " + rssi + " dBm, Ch " + ch + ", MCS: " + mcs_tx + ", HT" + ht + " @ " + ap)
 
